@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { api } from "../api";
 
 const PostList = () => {
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:4001/posts").then((res) => {
-      setPostList(res.data);
-    });
+    api()
+      .get("/posts")
+      .then((res) => {
+        setPostList(res.data);
+      });
   }, []);
 
   return (

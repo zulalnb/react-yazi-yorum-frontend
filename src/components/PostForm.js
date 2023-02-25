@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { api } from "../api";
 
 const PostForm = (props) => {
   const [post, setPost] = useState({ title: "", content: "" });
@@ -14,8 +14,8 @@ const PostForm = (props) => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     setError("");
-    axios
-      .post("http://localhost:4001/posts", post)
+    api()
+      .post("/posts", post)
       .then((res) => {
         props.history.push("/");
       })

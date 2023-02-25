@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { api } from "../api";
 import PostComments from "./PostComments";
 
 const PostDetail = (props) => {
@@ -9,8 +10,8 @@ const PostDetail = (props) => {
 
   const handleCommentSubmit = (e, comment) => {
     e.preventDefault();
-    axios
-      .post(`http://localhost:4001/posts/${id}/comments`, comment)
+    api()
+      .post(`/posts/${id}/comments`, comment)
       .then((res) => {
         setComments([...comments, res.data]);
       })
@@ -21,10 +22,7 @@ const PostDetail = (props) => {
 
   useEffect(() => {
     axios
-      .all([
-        axios.get(`http://localhost:4001/posts/${id}`),
-        axios.get(`http://localhost:4001/posts/${id}/comments`)
-      ])
+      .all([api().get(`/posts/${id}`), api().get(`/posts/${id}/comments`)])
       .then((responses) => {
         setPostDetail(responses[0].data);
         setComments(responses[1].data);
