@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { api } from "../api";
 import PostComments from "./PostComments";
@@ -49,6 +50,12 @@ const PostDetail = (props) => {
     <React.Fragment>
       <h2 className="ui header">{postDetail.title}</h2>
       <p>{postDetail.created_at}</p>
+      <div className="ui buttons">
+        <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>
+          Düzenle
+        </Link>
+        <button className="ui red button">Sil</button>
+      </div>
       <p>{postDetail.content}</p>
       <PostComments comments={comments} handleSubmit={handleCommentSubmit} />
     </React.Fragment>

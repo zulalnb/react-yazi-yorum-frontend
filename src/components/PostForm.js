@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { api } from "../api";
 
 const PostForm = (props) => {
-  const [post, setPost] = useState({ title: "", content: "" });
+  const [post, setPost] = useState({
+    title: "",
+    content: ""
+  });
   const [error, setError] = useState("");
 
   const onInputChange = (e) => {
@@ -14,15 +17,32 @@ const PostForm = (props) => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     setError("");
-    api()
-      .post("/posts", post)
-      .then((res) => {
-        props.history.push("/");
-      })
-      .catch((error) => {
-        setError("Başlık ve yazı içeriği alanları zorunludur.");
-      });
+
+    if (props?.post?.title) {
+      api()
+        .put(`/posts/${props.match?.params?.id}`, post)
+        .then((res) => {
+          console.log(res);
+          props.history.push(`/posts/${props.match.params.id}`);
+        })
+        .catch((error) => {
+          setError("Başlık ve yazı içeriği alanları zorunludur.");
+        });
+    } else {
+      api()
+        .post("/posts", post)
+        .then((res) => {
+          props.history.push("/");
+        })
+        .catch((error) => {
+          setError("Başlık ve yazı içeriği alanları zorunludur.");
+        });
+    }
   };
+
+  useEffect(() => {
+    if (props?.post?.title && props?.post?.content) setPost(props.post);
+  }, [props.post]);
 
   return (
     <React.Fragment>

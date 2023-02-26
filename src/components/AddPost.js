@@ -1,7 +1,7 @@
 import React from "react";
 import PostForm from "./PostForm";
 
-const AddPost = (props) => {
+const AddPost = () => {
   return (
     <div>
       <h1>Yazı Ekleme Formu</h1>
