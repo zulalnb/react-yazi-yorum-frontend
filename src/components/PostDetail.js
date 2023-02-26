@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { api } from "../api";
 import PostComments from "./PostComments";
 import DeleteModal from "./DeleteModal";
 
-const PostDetail = (props) => {
-  const { id } = props.match.params;
+const PostDetail = () => {
+  const { id } = useParams();
   const [postDetail, setPostDetail] = useState({});
   const [comments, setComments] = useState([]);
+
+  const history = useHistory();
 
   const handleCommentSubmit = (e, comment) => {
     e.preventDefault();
@@ -55,7 +57,7 @@ const PostDetail = (props) => {
         <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>
           Düzenle
         </Link>
-        <DeleteModal post={postDetail} push={props.history.push} />
+        <DeleteModal post={postDetail} push={history.push} />
       </div>
       <p>{postDetail.content}</p>
       <PostComments comments={comments} handleSubmit={handleCommentSubmit} />

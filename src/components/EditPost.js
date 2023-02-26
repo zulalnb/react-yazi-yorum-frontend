@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { api } from "../api";
 import PostForm from "./PostForm";
 
-const EditPost = (props) => {
+const EditPost = () => {
   const [post, setPost] = useState({});
-  const { id } = props.match.params;
+  const { id } = useParams();
 
   useEffect(() => {
     api()

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { api } from "../api";
 
 const PostForm = (props) => {
@@ -8,6 +8,9 @@ const PostForm = (props) => {
     content: ""
   });
   const [error, setError] = useState("");
+
+  const { id } = useParams();
+  const history = useHistory();
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,10 +23,10 @@ const PostForm = (props) => {
 
     if (props?.post?.title) {
       api()
-        .put(`/posts/${props.match?.params?.id}`, post)
+        .put(`/posts/${id}`, post)
         .then((res) => {
           console.log(res);
-          props.history.push(`/posts/${props.match.params.id}`);
+          history.push(`/posts/${id}`);
         })
         .catch((error) => {
           setError("Başlık ve yazı içeriği alanları zorunludur.");
@@ -32,7 +35,7 @@ const PostForm = (props) => {
       api()
         .post("/posts", post)
         .then((res) => {
-          props.history.push("/");
+          history.push("/");
         })
         .catch((error) => {
           setError("Başlık ve yazı içeriği alanları zorunludur.");
@@ -80,4 +83,4 @@ const PostForm = (props) => {
   );
 };
 
-export default withRouter(PostForm);
+export default PostForm;
