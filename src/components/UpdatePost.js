@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { api } from "../api";
 import PostForm from "./PostForm";
 
-const EditPost = () => {
+const UpdatePost = () => {
   const [post, setPost] = useState({});
   const { id } = useParams();
 
@@ -24,4 +24,4 @@ const EditPost = () => {
   );
 };
 
-export default EditPost;
+export default UpdatePost;

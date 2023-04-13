@@ -17,6 +17,7 @@ const PostDetail = () => {
     api()
       .post(`/posts/${id}/comments`, comment)
       .then((res) => {
+        console.log(res.data);
         setComments([...comments, res.data]);
       })
       .catch((error) => {
@@ -54,7 +55,7 @@ const PostDetail = () => {
       <h2 className="ui header">{postDetail.title}</h2>
       <p>{postDetail.created_at}</p>
       <div className="ui buttons">
-        <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>
+        <Link className="ui blue button" to={`/posts/${postDetail.id}/update`}>
           Düzenle
         </Link>
         <DeleteModal post={postDetail} push={history.push} />
