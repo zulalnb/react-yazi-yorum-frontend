@@ -5,7 +5,11 @@ import CommentForm from "./CommentForm";
 const PostComments = (props) => {
   return (
     <React.Fragment>
-      <CommentList comments={props.comments} />
+      <CommentList
+        comments={props.comments}
+        setComments={props.setComments}
+        handleSubmit={props.handleSubmit}
+      />
       <CommentForm handleSubmit={props.handleSubmit} />
     </React.Fragment>
   );

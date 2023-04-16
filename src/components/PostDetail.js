@@ -12,17 +12,31 @@ const PostDetail = () => {
 
   const history = useHistory();
 
-  const handleCommentSubmit = (e, comment) => {
+  const handleCommentSubmit = (e, comment, type = "submit") => {
     e.preventDefault();
-    api()
-      .post(`/posts/${id}/comments`, comment)
-      .then((res) => {
-        console.log(res.data);
-        setComments([...comments, res.data]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (type === "submit") {
+      api()
+        .post(`/posts/${id}/comments`, comment)
+        .then((res) => {
+          setComments([...comments, res.data]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (type === "update") {
+      api()
+        .put(`/posts/${id}/comments/${comment.id}`, { body: comment.body })
+        .then((res) => {
+          setComments(
+            comments.map((commentItem) =>
+              commentItem.id === comment.id ? res.data : commentItem
+            )
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -61,7 +75,11 @@ const PostDetail = () => {
         <DeleteModal post={postDetail} push={history.push} />
       </div>
       <p>{postDetail.content}</p>
-      <PostComments comments={comments} handleSubmit={handleCommentSubmit} />
+      <PostComments
+        comments={comments}
+        setComments={setComments}
+        handleSubmit={handleCommentSubmit}
+      />
     </React.Fragment>
   );
 };

@@ -19,7 +19,7 @@ const CommentForm = (props) => {
       <form
         className="ui form"
         onSubmit={(e) => {
-          props.handleSubmit(e, comment);
+          props.handleSubmit(e, comment, "submit");
           setComment(INITIAL_COMMENT);
         }}
       >
